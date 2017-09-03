@@ -1,2 +1,3 @@
 .idea/*
 svt_event/__pycache__/*
+db.sqlite3
