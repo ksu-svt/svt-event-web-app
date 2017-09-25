@@ -17,6 +17,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
-    url(r'^$', include('event_manager.urls')),
+    # Changed Default To Homepage instead (Will Fix Later)
+    url(r'^home/', include('event_manager.urls')),
     url(r'^admin/', admin.site.urls),
 ]
