@@ -9,6 +9,7 @@ class Team(models.Model):
 class Member(models.Model):
     firstname = models.CharField(max_length=50)
     lastname = models.CharField(max_length=50)
+    netid = models.CharField(max_length=50)
     email = models.EmailField()
     role = models.CharField(max_length=50)
     major = models.CharField(max_length=50)
