@@ -17,8 +17,8 @@ class Member(models.Model):
 
 class Team(models.Model):
     title = models.CharField(max_length=200)
-    lead = models.ForeignKey(Member, null=True, on_delete=models.SET_NULL)
-    members = models.ManyToManyField(User, related_name="team_members")
+    lead = models.ForeignKey(User, related_name="team_lead",null=True, on_delete=models.SET_NULL)
+    members = models.ManyToManyField(User)
 
     def __str__(self):
         return self.title
@@ -33,6 +33,14 @@ class Event(models.Model):
 
     def __str__(self):
         return self.title
+
+class TeamAdmin(admin.ModelAdmin):
+    model=Team
+    filter_vertical = ('members',)
+
+class EventAdmin(admin.ModelAdmin):
+    model=Event
+    filter_vertical = ('members',)
 
 class MemberInline(admin.StackedInline):
     model=Member
