@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Team, Event, UserAdmin
+from .models import Team, Event, Member, UserAdmin
 from django.contrib.auth.models import User
 
 admin.site.register(Team)

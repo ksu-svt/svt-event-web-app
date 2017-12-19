@@ -13,15 +13,15 @@ class Member(models.Model):
     points = models.IntegerField(default=0)
 
     def __str__(self):
-        return User.first_name+" "+User.last_name
+        return self.user.get_full_name()
 
 class Team(models.Model):
     title = models.CharField(max_length=200)
     lead = models.ForeignKey(Member, null=True, on_delete=models.SET_NULL)
-    members = models.ManyToManyField(Member, related_name="team_members")
+    members = models.ManyToManyField(User, related_name="team_members")
 
     def __str__(self):
-        return Team.title
+        return self.title
 
 class Event(models.Model):
     team = models.ForeignKey(Team,on_delete=models.CASCADE)
@@ -29,10 +29,10 @@ class Event(models.Model):
     location = models.CharField(max_length=200)
     dateTime = models.DateTimeField()
     description = models.CharField(max_length=200)
-    user = models.ManyToManyField(Member)
+    members = models.ManyToManyField(User)
 
     def __str__(self):
-        return Event.title
+        return self.title
 
 class MemberInline(admin.StackedInline):
     model=Member
