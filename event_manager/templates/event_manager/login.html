@@ -1,0 +1,18 @@
+{% include "event_manager/header.html" %}
+{% include "event_manager/menu.html" %}
+{% if error_message %}<h3>{{ error_message }}</h3>{% endif %}
+<div id="login">
+    <form action="" method="post">
+        {% csrf_token %}
+        <label class="login-label" for="login-user">Username:</label>
+        <input type="text" placeholder="Please Enter Your Username" name="login-user" id="login-user"/>
+        <label for="login-pass" class="login-label">Password:</label>
+        <input id="login-pass" name="login-pass" type="password" placeholder="Please Enter Your Password"/>
+        <input type="submit" value="Submit"/>
+    </form>
+
+
+
+
+</div><!--End Div For Login-->
+{% include "event_manager/footer.html" %}
