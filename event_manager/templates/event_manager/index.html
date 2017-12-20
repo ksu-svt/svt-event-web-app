@@ -1,4 +1,14 @@
-{% include "event_manager/header.html" %}
-{% include "event_manager/menu.html" %}
-content here
-{% include "event_manager/footer.html" %}
+<!-- HTML Document Comes From Base -->
+{% extends 'base.html' %}
+
+    {% block head %}
+    <title>Index</title>
+    {% endblock %}
+
+    {% block body %}
+        {% if user.is_authenticated %}
+    <p>Welcome, {{ user.username }}. Thanks for logging in.</p>
+        {% endif %}
+    Content
+
+    {% endblock %}
