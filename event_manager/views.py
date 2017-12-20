@@ -1,25 +1,33 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate
 from django.shortcuts import redirect
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse
+from django.contrib.auth import login
+from django.template import loader
 
 def index(request):
-    return render(request, 'event_manager/index.html')
+    template=loader.get_template('event_manager/index.html')
+    return HttpResponse(template.render({}, request))
 
-def login(request):
+def auth_login(request):
     if request.POST:
+
         user=request.POST['login-user']
         passwd=request.POST['login-pass']
-
+        #
         auth=authenticate(username=user,password=passwd)
         if auth is not None:
+
             if auth.is_active:
                 login(request,auth)
-                return HttpResponseRedirect("/index.html")
+                template = loader.get_template('event_manager/index.html')
+                return HttpResponse(template.render({}, request))
             else:
-                return render(request,'event_manager/login.html',{'error_message':"User Not Active"})#display if user not active
+                template = loader.get_template('event_manager/login.html')
+                return HttpResponse(template.render({'error_message':"User Not Active"}, request))#not working
         else:
-            return render(request, 'event_manager/login.html', {'error_message': "Invalid Username or Password"})#display if invalid username/password or user doesn't exist
+            template = loader.get_template('event_manager/login.html')
+            return HttpResponse(template.render({'error_message': "Invalid Username or Password"}, request))
 
-
-    return render(request,'event_manager/login.html')#login form
+    template = loader.get_template('event_manager/login.html')
+    return HttpResponse(template.render({}, request))
