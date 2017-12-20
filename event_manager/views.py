@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 # Signup Authentication
-from django.contrib.auth.forms imports UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 # Login Function within Django Framework
 from django.contrib.auth.views import login
 
