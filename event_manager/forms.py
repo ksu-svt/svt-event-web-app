@@ -27,12 +27,17 @@ class MemberCreateForm(forms.ModelForm):
     netid=forms.IntegerField(label="Net ID")
     major = forms.CharField(label="Major")
 
-    #need to get user id, which is foreign key, will not save without that
-
     class Meta:
         model = Member
         fields = ("netid", "major")
 
+    def save(self, commit=True):
+        user=super(MemberCreateForm,self).save(commit=False)
+        Member.netid=self.cleaned_data["netid"]
+        Member.major=self.cleaned_data["major"]
 
+        if commit:
+            user.save()
+        return user
 
 

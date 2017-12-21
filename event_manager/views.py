@@ -45,6 +45,8 @@ def signup_form(request):
         member_form = MemberCreateForm(request.POST)
         if form.is_valid() and member_form.is_valid():
             user = form.save()
+            member=member_form.save(commit=False)
+            member.user=user
             member_form.save()
             return redirect('/home/')
     else:
