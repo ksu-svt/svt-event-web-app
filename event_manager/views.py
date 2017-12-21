@@ -5,6 +5,10 @@ from django.http import HttpResponse
 from django.contrib.auth import login
 from django.template import loader
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django import forms
+from django.contrib.auth.models import User
+from .forms import UserCreateForm
+
 
 def index(request):
     template=loader.get_template('event_manager/index.html')
@@ -34,15 +38,16 @@ def index(request):
 #     template = loader.get_template('event_manager/login.html')
 #     return HttpResponse(template.render({}, request))
 
+
 def signup_form(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = UserCreateForm(request.POST)
         if form.is_valid():
             user = form.save()
             # log the user in
             return redirect('/home/')  # trying to go to login page
     else:
-        form = UserCreationForm()
+        form = UserCreateForm()
         # Please Add Sign Up form View Here (render, View, 'form':form)
     return render(request, 'event_manager/signup.html', {'form': form})
     pass
