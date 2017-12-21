@@ -7,7 +7,7 @@ from django.template import loader
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django import forms
 from django.contrib.auth.models import User
-from .forms import UserCreateForm
+from .forms import UserCreateForm,MemberCreateForm
 
 
 def index(request):
@@ -42,15 +42,18 @@ def index(request):
 def signup_form(request):
     if request.method == 'POST':
         form = UserCreateForm(request.POST)
-        if form.is_valid():
+        member_form = MemberCreateForm(request.POST)
+        if form.is_valid() and member_form.is_valid():
             user = form.save()
-            # log the user in
-            return redirect('/home/')  # trying to go to login page
+            member_form.save()
+            return redirect('/home/')
     else:
         form = UserCreateForm()
+        member_form = MemberCreateForm()
         # Please Add Sign Up form View Here (render, View, 'form':form)
-    return render(request, 'event_manager/signup.html', {'form': form})
-    pass
+    return render(request, 'event_manager/signup.html', {'form': form,'member_form':member_form})
+
+
 
 
 def login_form(request):
