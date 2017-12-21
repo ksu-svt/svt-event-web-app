@@ -1,0 +1,26 @@
+<!-- HTML Document Comes From Base -->
+{% extends 'base.html' %}
+
+    {% block head %}
+    <title>Login</title>
+    {% endblock %}
+
+    {% block body %}
+    <div class = "container">
+        <h1>Welcome</h1>
+        <p>
+            You can login in here!
+        </p>
+        <h2>Login</h2>
+        <form method = "post">
+            <!--
+            Django Requires This Cross Side Request Forgery Token  For Secure Login
+            Django Takes Care of Hashing
+             -->
+            {% csrf_token %}
+            <!-- HTML Login Form rendered as a paragraph -->
+            {{ form.as_p}}
+            <button type = "submit" class = "btn btn-primary"> Login </button>
+        </form>
+    </div>
+    {% endblock %}

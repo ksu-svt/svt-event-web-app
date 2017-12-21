@@ -1,11 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <h1>Hello!</h1>
-    <p>Wow wow wow wow!</p>
-</body>
-</html>
+<!-- HTML Document Comes From Base -->
+{% extends 'base.html' %}
+
+    {% block head %}
+    <title>Index</title>
+    {% endblock %}
+
+    {% block body %}
+        {% if user.is_authenticated %}
+    <p>Welcome, {{ user.username }}. Thanks for logging in.</p>
+        {% endif %}
+    Content
+
+    {% endblock %}
