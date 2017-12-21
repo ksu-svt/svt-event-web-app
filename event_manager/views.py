@@ -8,7 +8,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django import forms
 from django.contrib.auth.models import User
 from .forms import UserCreateForm,MemberCreateForm
-
+from django.contrib.auth.views import logout as lout
 
 def index(request):
     template=loader.get_template('event_manager/index.html')
@@ -40,31 +40,41 @@ def index(request):
 
 
 def signup_form(request):
-    if request.method == 'POST':
-        form = UserCreateForm(request.POST)
-        member_form = MemberCreateForm(request.POST)
-        if form.is_valid() and member_form.is_valid():
-            user = form.save()
-            member=member_form.save(commit=False)
-            member.user=user
-            member_form.save()
-            return redirect('/home/')
+    if not request.user.is_authenticated:
+        if request.method == 'POST':
+            form = UserCreateForm(request.POST)
+            member_form = MemberCreateForm(request.POST)
+            if form.is_valid() and member_form.is_valid():
+                user = form.save()
+                member=member_form.save(commit=False)
+                member.user=user
+                member_form.save()
+                return redirect('/home/')
+        else:
+            form = UserCreateForm()
+            member_form = MemberCreateForm()
+            # Please Add Sign Up form View Here (render, View, 'form':form)
+        return render(request, 'event_manager/signup.html', {'form': form,'member_form':member_form})
     else:
-        form = UserCreateForm()
-        member_form = MemberCreateForm()
-        # Please Add Sign Up form View Here (render, View, 'form':form)
-    return render(request, 'event_manager/signup.html', {'form': form,'member_form':member_form})
+        return redirect('/home/')
 
 
 
 
 def login_form(request):
-    if request.method == 'POST':
-        form = AuthenticationForm(data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            login(request, user)
-            return redirect('/home/')  # using Login_redirect_url on settings
+    if not request.user.is_authenticated:
+        if request.method == 'POST':
+            form = AuthenticationForm(data=request.POST)
+            if form.is_valid():
+                user = form.get_user()
+                login(request, user)
+                return redirect('/home/')  # using Login_redirect_url on settings
+        else:
+            form = AuthenticationForm()
+        return render(request, 'event_manager/login.html', {'form': form})
     else:
-        form = AuthenticationForm()
-    return render(request, 'event_manager/login.html', {'form': form})
+        return redirect('/home/')
+
+def logout(request):
+    lout(request)
+    return redirect('/login/')
