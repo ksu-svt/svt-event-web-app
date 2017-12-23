@@ -1,0 +1,33 @@
+<!-- HTML Document Comes From Base -->
+{% extends 'base.html' %}
+
+    {% block head %}
+    <title>Index</title>
+    {% endblock %}
+
+    {% block body %}
+
+        <div class="container">
+            <h1>Events</h1>
+            {% for event in object_list %}
+                <div class="card">
+                  <div class="row">
+                    <div class="col-lg-2">
+                        <h1>{{ event.dateTime.day }}</h1>
+                        <h3>{{ event.dateTime|date:"F" }}</h3>
+                        <h3>{{ event.dateTime.year }}</h3>
+                    </div>
+                    <div class="card-body col-lg-10">
+                      <h4 class="card-title">{{ event.title }}</h4>
+                      <h6 class="card-subtitle mb-2 text-muted">{{ event.team }}</h6>
+                      <p class="card-text">{{ event.description }}</p>
+                      <a href="#" class="card-link">View Detail</a>
+                    </div>
+                  </div>
+                </div>
+            {% empty %}
+                <p>No events so far...</p>
+            {% endfor %}
+        </div>
+
+    {% endblock %}

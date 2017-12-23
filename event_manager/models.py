@@ -18,7 +18,7 @@ class Member(models.Model):
 class Team(models.Model):
     title = models.CharField(max_length=200)
     lead = models.ForeignKey(User, related_name="team_lead",null=True, on_delete=models.SET_NULL)
-    members = models.ManyToManyField(User)
+    members = models.ManyToManyField(User, related_name='team_members')
 
     def __str__(self):
         return self.title
@@ -29,7 +29,7 @@ class Event(models.Model):
     location = models.CharField(max_length=200)
     dateTime = models.DateTimeField()
     description = models.CharField(max_length=200)
-    members = models.ManyToManyField(User)
+    members = models.ManyToManyField(User, related_name='members')
 
     def __str__(self):
         return self.title
@@ -42,18 +42,18 @@ class EventAdmin(admin.ModelAdmin):
     model=Event
     filter_vertical = ('members',)
 
+class TeamUserInline(admin.StackedInline):
+    model = Team.members.through
+    max_num = 1
+
 class MemberInline(admin.StackedInline):
     model=Member
     max_num=1
 
 class UserAdmin(AuthUserAdmin):
-    inlines=(MemberInline,)
+    inlines=(MemberInline, TeamUserInline)
 
     def get_inline_instances(self, request, obj=None):
         if not obj:
             return list()
-        return super(UserAdmin, self).get_inline_instances(request, obj)
-
-
-
-# Create your models here.
+        return super().get_inline_instances(request, obj)
