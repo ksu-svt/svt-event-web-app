@@ -1,0 +1,40 @@
+<!-- HTML Document Comes From Base -->
+{% extends 'base.html' %}
+
+    {% block head %}
+    <title>Index</title>
+    {% endblock %}
+
+    {% block body %}
+        {% if events %}
+            <table border="1">
+            <tr>
+                <td>Team</td>
+                <td>Title</td>
+                <td>Members</td>
+                <td>Description</td>
+                <td>Date</td>
+                <td>Location</td>
+
+
+            </tr>
+
+
+
+
+
+            {% for e in events %}
+                <tr>
+                    <td>{{ e.team }}</td>
+                    <td>{{ e.title }}</td>
+                    <td>{% for m in e.members.all %}{{ m }}<br/>{% endfor %}</td>
+                    <td>{{ e.description }}</td>
+                    <td>{{ e.dateTime }}</td>
+                    <td>{{ e.location }}</td>
+                </tr>
+            {% endfor %}
+            </table>
+        {% else %}
+            No Events Available
+        {% endif %}
+    {% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load group_tags %}
+
+    {% block head %}
+        <title>Sign up</title>
+    {% endblock %}
+  {% block body %}
+  <h1>List of Members</h1>
+  <!--will only display users which have member details-->
+    {% if members %}
+        <table border="1">
+
+        <tr>
+            <td class="heading">First Name</td>
+            <td class="heading">Last Name</td>
+            <td class="heading">Major</td>
+            <td class="heading">Role</td>
+
+            {% if request.user|has_group:"test" %}<!--for officers-->
+                <td class="heading">Net ID</td>
+                <td class="heading">UserName</td>
+                <td class="heading">Points</td>
+                <td class="heading">Groups</td>
+            {% endif %}
+        </tr>
+        {% for m in members %}
+            {% if m.user.is_active %}
+            {% endif %}
+            <tr>
+            <td class="result">{{ m.user.first_name }}</td>
+            <td class="result">{{ m.user.last_name }}</td>
+            <td class="result">{{ m.major}}</td>
+            <td class="result">{{ m.role}}</td>
+            {% if request.user|has_group:"test" %}<!--for officers-->
+                <td class="result">{{ m.netid}}</td>
+                <td class="result">{{ m.user.username}}</td>
+                <td class="result">{{ m.points }}</td>
+                <td class="result">{% for g in m.user.groups.all %}{{ g }}<br/>{% endfor %}</td>
+
+            {% endif %}
+
+
+
+
+            </tr>
+
+        {% endfor %}
+        </table>
+    {% else %}
+        <p>No Data Available</p>
+    {% endif %}
+  {% endblock %}
