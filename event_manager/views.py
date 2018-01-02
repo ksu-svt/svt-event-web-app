@@ -9,7 +9,8 @@ from django import forms
 from django.contrib.auth.models import User
 from .forms import UserCreateForm,MemberCreateForm
 from django.contrib.auth.views import logout as lout
-from .models import Member
+from .models import Member,Event
+from datetime import date
 
 def index(request):
     template=loader.get_template('event_manager/index.html')
@@ -86,5 +87,15 @@ def memberRoaster(request):
         context={'members':member}
         template=loader.get_template('event_manager/members.html')
         return HttpResponse(template.render(context,request))
+    else:
+        return redirect('/login/')
+
+def viewEvent(request):
+    if request.user.is_authenticated:
+        dt=date.today()
+        event=Event.objects.filter(dateTime__gte=dt)
+        context={'events':event}
+        template=loader.get_template('event_manager/events.html')
+        return HttpResponse(template.render(context, request))
     else:
         return redirect('/login/')

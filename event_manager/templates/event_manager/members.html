@@ -1,23 +1,26 @@
+{% extends 'base.html' %}
 {% load group_tags %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+
+    {% block head %}
+        <title>Sign up</title>
+    {% endblock %}
+  {% block body %}
   <h1>List of Members</h1>
   <!--will only display users which have member details-->
     {% if members %}
-        <table row="1">
+        <table border="1">
 
         <tr>
             <td class="heading">First Name</td>
             <td class="heading">Last Name</td>
             <td class="heading">Major</td>
-            <td class="heading">Net ID</td>
+            <td class="heading">Role</td>
+
             {% if request.user|has_group:"test" %}<!--for officers-->
+                <td class="heading">Net ID</td>
                 <td class="heading">UserName</td>
+                <td class="heading">Points</td>
+                <td class="heading">Groups</td>
             {% endif %}
         </tr>
         {% for m in members %}
@@ -27,9 +30,13 @@
             <td class="result">{{ m.user.first_name }}</td>
             <td class="result">{{ m.user.last_name }}</td>
             <td class="result">{{ m.major}}</td>
-            <td class="result">{{ m.netid}}</td>
+            <td class="result">{{ m.role}}</td>
             {% if request.user|has_group:"test" %}<!--for officers-->
+                <td class="result">{{ m.netid}}</td>
                 <td class="result">{{ m.user.username}}</td>
+                <td class="result">{{ m.points }}</td>
+                <td class="result">{% for g in m.user.groups.all %}{{ g }}<br/>{% endfor %}</td>
+
             {% endif %}
 
 
@@ -42,5 +49,4 @@
     {% else %}
         <p>No Data Available</p>
     {% endif %}
-</body>
-</html>
+  {% endblock %}
