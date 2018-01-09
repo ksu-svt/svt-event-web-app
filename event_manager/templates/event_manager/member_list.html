@@ -1,5 +1,6 @@
 <!-- HTML Document Comes From Base -->
 {% extends 'base.html' %}
+{% load group_tags %}
 
     {% block head %}
     <title>Index</title>
@@ -12,26 +13,35 @@
             {% for member in member_list %}
                 <div class="card">
                     <div class="card-body">
-                        {% if member.user.get_full_name %}
-                            <h4 class="card-title">{{ member.user.get_full_name }}</h4>
-                        {% else %}
-                            <h4 class="card-title">{{ member.user }}</h4>
-                        {% endif %}
+                        <h4 class="card-title">
+                            {% if member.user.get_full_name %}
+                                {{ member.user.get_full_name }}
+                            {% else %}
+                                {{ member.user }}
+                            {% endif %}
+
+                            {% if member.user|has_group:"officers" %}
+                                <span class="badge badge-primary">Officer</span>
+                            {% endif %}
+                        </h4>
+
 
                         {{ member.user.team_members.one }}
 
                         <h6 class="card-subtitle mb-2 text-muted">
                             {% if member.role %}
-                                {{ member.role }} &bull;
+                                {{ member.role }}
                             {% else %}
-                                Member &bull;
+                                Member
                             {% endif %}
 
                             {% if member.user.team_members.first %}
-                                {{ member.user.team_members.first }} &bull;
+                                &bull; {{ member.user.team_members.first }}
                             {% endif %}
 
-                            {{ member.points }} Points
+                            {% if request.user|has_group:"officers" %}<!--for officers-->
+                                &bull; {{ member.points }} Points
+                            {% endif %}
                         </h6>
 
                         <p class="card-text">fjeowifj</p>

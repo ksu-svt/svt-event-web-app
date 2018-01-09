@@ -1,3 +1,4 @@
+from datetime import date
 from django.shortcuts import render
 from django.contrib.auth import authenticate
 from django.shortcuts import redirect
@@ -21,6 +22,10 @@ from event_manager.models import Event, Member
 class EventListView(LoginRequiredMixin, ListView):
     model = Event
     login_url = '/login/'
+
+    def get_queryset(self):
+        dt = date.today()
+        return self.model.objects.filter(dateTime__gte=dt)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
