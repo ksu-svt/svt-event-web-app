@@ -1,0 +1,56 @@
+<!-- HTML Document Comes From Base -->
+{% extends 'base.html' %}
+{% load group_tags %}
+
+    {% block head %}
+    <title>Index</title>
+    {% endblock %}
+
+    {% block body %}
+
+        <div class="container">
+            <h1>Members</h1>
+            {% for member in member_list %}
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            {% if member.user.get_full_name %}
+                                {{ member.user.get_full_name }}
+                            {% else %}
+                                {{ member.user }}
+                            {% endif %}
+
+                            {% if member.user|has_group:"officers" %}
+                                <span class="badge badge-primary">Officer</span>
+                            {% endif %}
+                        </h4>
+
+
+                        {{ member.user.team_members.one }}
+
+                        <h6 class="card-subtitle mb-2 text-muted">
+                            {% if member.role %}
+                                {{ member.role }}
+                            {% else %}
+                                Member
+                            {% endif %}
+
+                            {% if member.user.team_members.first %}
+                                &bull; {{ member.user.team_members.first }}
+                            {% endif %}
+
+                            {% if request.user|has_group:"officers" %}<!--for officers-->
+                                &bull; {{ member.points }} Points
+                            {% endif %}
+                        </h6>
+
+                        <p class="card-text">fjeowifj</p>
+                        <a href="#" class="card-link">View Detail</a>
+                    </div>
+                </div>
+            {% empty %}
+                <p>No events so far...</p>
+            {% endfor %}
+        </div>
+
+    {% endblock %}
