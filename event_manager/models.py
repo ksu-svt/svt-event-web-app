@@ -18,7 +18,7 @@ class Member(models.Model):
 class Team(models.Model):
     title = models.CharField(max_length=200)
     lead = models.ForeignKey(User, related_name="team_lead",null=True, on_delete=models.SET_NULL)
-    members = models.ManyToManyField(User, related_name='team_members')
+    members = models.ManyToManyField(User, related_name='team_members', blank=True)
 
     def __str__(self):
         return self.title
@@ -29,7 +29,7 @@ class Event(models.Model):
     location = models.CharField(max_length=200)
     dateTime = models.DateTimeField()
     description = models.CharField(max_length=200)
-    members = models.ManyToManyField(User, related_name='members')
+    members = models.ManyToManyField(User, related_name='members', blank=True)
 
     def __str__(self):
         return self.title
