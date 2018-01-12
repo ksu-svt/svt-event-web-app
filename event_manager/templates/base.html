@@ -6,6 +6,7 @@
     <!-- Base HTML Template (Handling Bootstrap) -->
     <script src="{% static "event_manager/js/jquery.min.js" %}"></script>
     <link rel="stylesheet" href="{% static "event_manager/css/bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "event_manager/css/main.css" %}">
 
     {% block head %}
     <title> Base </title>
@@ -16,5 +17,6 @@
     {% block body %}
     <h1>Base</h1>
     {% endblock %}
+    {% include "event_manager/footer.html" %}
 </body>
 </html>

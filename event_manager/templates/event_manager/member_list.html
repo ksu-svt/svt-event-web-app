@@ -45,12 +45,11 @@
                         </h6>
 
                         <p class="card-text">fjeowifj</p>
-                        <a href="#" class="card-link">View Detail</a>
+                        <a href="{% url 'member-detail' member.id %}" class="card-link">View Detail</a>
                     </div>
                 </div>
             {% empty %}
                 <p>No members so far...</p>
             {% endfor %}
         </div>
-
     {% endblock %}
