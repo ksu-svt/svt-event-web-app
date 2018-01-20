@@ -11,7 +11,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django import forms
 from django.contrib.auth.models import User
 from django.utils import timezone
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 from .forms import UserCreateForm,MemberCreateForm
 from django.contrib.auth.views import logout as lout
@@ -32,9 +32,25 @@ class EventListView(LoginRequiredMixin, ListView):
         context['now'] = timezone.now()
         return context
 
+class EventDetailView(DetailView):
+    model = Event
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['now'] = timezone.now()
+        return context
+
 class MemberListView(LoginRequiredMixin, ListView):
     model = Member
     login_url = '/login/'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['now'] = timezone.now()
+        return context
+
+class MemberDetailView(DetailView):
+    model = Member
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -1,0 +1,37 @@
+<!-- HTML Document Comes From Base -->
+{% extends 'base.html' %}
+
+    {% block head %}
+    <title>Index</title>
+    {% endblock %}
+
+    {% block body %}
+        <div class="container">
+            <h1>{{ object.title }}</h1>
+            <div class="row">
+                <div class="col-4">
+                    <img class="img-fluid" src="http://via.placeholder.com/350x350">
+                </div>
+                <div class="col-8">
+                    <h3>Team</h3>
+                    <p>{{ object.team.title }}</p>
+                    <div class="row">
+                        <div class="col">
+                            <h3>Time</h3>
+                            <p>{{ object.dateTime }}</p>
+                        </div>
+                        <div class="col">
+                            <h3>Location</h3>
+                            <p>{{ object.location }}</p>
+                        </div>
+                    </div>
+                    <h3>Description</h3>
+                    <p>{{ object.description }}</p>
+                </div>
+            </div>
+            <h2>Attendance</h2>
+            <div class="col-12">
+                {% include 'event_manager/items_list.html' with queryset=event.members.all template_name='member-detail' %}
+            </div>
+        </div>
+    {% endblock %}

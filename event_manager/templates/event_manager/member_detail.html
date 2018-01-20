@@ -1,0 +1,77 @@
+<!-- HTML Document Comes From Base -->
+{% extends 'base.html' %}
+
+    {% block head %}
+    <title>Index</title>
+    {% endblock %}
+
+    {% block body %}
+        <div class="container">
+            <h1>
+                {% if member.user.get_full_name %}
+                    {{ member.user.get_full_name }}
+                {% else %}
+                    {{ member.user.username }}
+                {% endif %}
+            </h1>
+            <div class="row">
+                <div class="col-4">
+                    <img class="img-fluid" src="http://via.placeholder.com/350x350">
+                </div>
+                <div class="col-8">
+                    <h3>Team</h3>
+                    {% for team in member.user.team_members.all %}
+                        <h5><span class="badge badge-primary">{{ team.title }}</span></h5>
+                    {% endfor %}
+                    <div class="row">
+                        <div class="col">
+                            <h3>Role</h3>
+                            <p>
+                                {% if member.role %}
+                                    {{ member.role }}
+                                {% else %}
+                                    Member
+                                {% endif %}
+                            </p>
+                        </div>
+                        <div class="col">
+                            <h3>Major</h3>
+                            <p>
+                                {% if member.major %}
+                                    {{ member.major }}
+                                {% else %}
+                                    Undeclared
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h3>KSU NetID</h3>
+                            <p>
+                                {% if member.netid %}
+                                    {{ member.netid }}
+                                {% else %}
+                                    No NetID
+                                {% endif %}
+                            </p>
+                        </div>
+                        <div class="col">
+                            <h3>Email</h3>
+                            <p>
+                                {% if member.user.email %}
+                                    {{ member.user.email }}
+                                {% else %}
+                                    No Email Provided
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h2>Events Attended</h2>
+            <div class="col-12">
+                {% include 'event_manager/items_list.html' with queryset=member.user.members.all template_name='event-detail' %}
+            </div>
+        </div>
+    {% endblock %}

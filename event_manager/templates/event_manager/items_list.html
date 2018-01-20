@@ -1,0 +1,7 @@
+<ul class="list-group">
+    {% for object in queryset %}
+        <li class="list-group-item">
+            <a href="{% url template_name object.pk %}">{{ object }}</a>
+        </li>
+    {% endfor %}
+</ul>

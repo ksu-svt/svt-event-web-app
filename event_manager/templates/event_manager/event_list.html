@@ -21,7 +21,7 @@
                       <h4 class="card-title">{{ event.title }}</h4>
                       <h6 class="card-subtitle mb-2 text-muted">{{ event.team }}</h6>
                       <p class="card-text">{{ event.description }}</p>
-                      <a href="#" class="card-link">View Detail</a>
+                      <a href="{% url 'event-detail' event.id %}" class="card-link">View Detail</a>
                     </div>
                   </div>
                 </div>
